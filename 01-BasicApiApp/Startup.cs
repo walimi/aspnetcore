@@ -1,9 +1,12 @@
 using System;
+using ConsoleApplication.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 
 namespace ConsoleApplication
 {
@@ -29,6 +32,7 @@ namespace ConsoleApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore().AddJsonFormatters();
+            services.AddDbContext<ArticlesContext>(options => { options.UseSqlite(Configuration.GetConnectionString("Articles")); });
         }
 
         // This method gets called by the runtime, after ConfigureServices, and is required. Use this method to configure the HTTP request pipeline.
